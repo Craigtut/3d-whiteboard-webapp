@@ -6,6 +6,7 @@ import CircleLoadingAnimation from '../../Components/CircleLoadingAnimation';
 import Logo from '../../Images/Logo.svg';
 
 import { Colors } from '../../Theme';
+import ToolPanel from './ToolPanel';
 
 const Whiteboard = () => {
   return (
@@ -15,8 +16,9 @@ const Whiteboard = () => {
           <img src={Logo} alt="logo" />
         </div>
       </div>
+      <ToolPanel />
       <Suspense fallback={<CircleLoadingAnimation />}>
-        <BoardRenderer style={styles.board} />
+        <BoardRenderer style={styles.board} g />
       </Suspense>
     </div>
   );

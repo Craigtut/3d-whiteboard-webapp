@@ -4,16 +4,19 @@ import { useTexture } from '@react-three/drei';
 import { DoubleSide, RepeatWrapping } from 'three';
 import whiteboardTextureTile from '../../../Images/Textures/whiteboardTextureTile.png';
 import CameraWithControls from '../../../Components/Three/CameraWithControls';
+import { useToolBarStore } from '../../../Stores';
 
 const BoardRenderer = (style) => {
+  const selectedTool = useToolBarStore((state) => state.selectedTool);
+
   return (
     <Canvas style={style}>
-      <CameraWithControls position={[0, 0, 20]} fov={30} draggable={false} />
+      <CameraWithControls position={[0, 0, 20]} fov={30} dragTool={selectedTool === 1} />
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
       <Box position={[-1.2, 0, 0]} />
       <Box position={[1.2, 0, 0]} />
-      <WhiteboardBacking size={24} />
+      <WhiteboardBacking size={128} />
     </Canvas>
   );
 };
