@@ -12,7 +12,6 @@ const ShortcutListeners = () => {
 
   const handleDeleteCurrentlySelected = () => {
     if (selectedObject) {
-      console.log('Deleting');
       deleteObject();
     }
   };
