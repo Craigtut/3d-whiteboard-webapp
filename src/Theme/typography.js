@@ -4,7 +4,7 @@ import typeTokens from './typography-tokens';
 const styles = {
   display1: {
     fontSize: typeTokens.typography['display 1'].fontSize.value,
-    lineHeight: typeTokens.typography['display 1'].lineHeight.value,
+    lineHeight: `${typeTokens.typography['display 1'].lineHeight.value}px`,
     fontWeight: typeTokens.typography['display 1'].fontWeight.value,
     letterSpacing: typeTokens.typography['display 1'].letterSpacing.value,
     textTransform: typeTokens.typography['display 1'].textCase.value,
@@ -13,7 +13,7 @@ const styles = {
   },
   display2: {
     fontSize: typeTokens.typography['display 2'].fontSize.value,
-    lineHeight: typeTokens.typography['display 2'].lineHeight.value,
+    lineHeight: `${typeTokens.typography['display 2'].lineHeight.value}px`,
     fontWeight: typeTokens.typography['display 2'].fontWeight.value,
     letterSpacing: typeTokens.typography['display 2'].letterSpacing.value,
     textTransform: typeTokens.typography['display 2'].textCase.value,
@@ -22,7 +22,7 @@ const styles = {
   },
   display3: {
     fontSize: typeTokens.typography['display 3'].fontSize.value,
-    lineHeight: typeTokens.typography['display 3'].lineHeight.value,
+    lineHeight: `${typeTokens.typography['display 3'].lineHeight.value}px`,
     fontWeight: typeTokens.typography['display 3'].fontWeight.value,
     letterSpacing: typeTokens.typography['display 3'].letterSpacing.value,
     textTransform: typeTokens.typography['display 3'].textCase.value,
@@ -31,7 +31,7 @@ const styles = {
   },
   title: {
     fontSize: typeTokens.typography.title.fontSize.value,
-    lineHeight: typeTokens.typography.title.lineHeight.value,
+    lineHeight: `${typeTokens.typography.title.lineHeight.value}px`,
     fontWeight: typeTokens.typography.title.fontWeight.value,
     letterSpacing: typeTokens.typography.title.letterSpacing.value,
     textTransform: typeTokens.typography.title.textCase.value,
@@ -40,7 +40,7 @@ const styles = {
   },
   title2: {
     fontSize: typeTokens.typography['title 2'].fontSize.value,
-    lineHeight: typeTokens.typography['title 2'].lineHeight.value,
+    lineHeight: `${typeTokens.typography['title 2'].lineHeight.value}px`,
     fontWeight: typeTokens.typography['title 2'].fontWeight.value,
     letterSpacing: typeTokens.typography['title 2'].letterSpacing.value,
     textTransform: typeTokens.typography['title 2'].textCase.value,
@@ -49,7 +49,7 @@ const styles = {
   },
   subtitle: {
     fontSize: typeTokens.typography.subtitle.fontSize.value,
-    lineHeight: typeTokens.typography.subtitle.lineHeight.value,
+    lineHeight: `${typeTokens.typography.subtitle.lineHeight.value}px`,
     fontWeight: typeTokens.typography.subtitle.fontWeight.value,
     letterSpacing: typeTokens.typography.subtitle.letterSpacing.value,
     textTransform: typeTokens.typography.subtitle.textCase.value,
@@ -58,7 +58,7 @@ const styles = {
   },
   body: {
     fontSize: typeTokens.typography.body.fontSize.value,
-    lineHeight: typeTokens.typography.body.lineHeight.value,
+    lineHeight: `${typeTokens.typography.body.lineHeight.value}px`,
     fontWeight: typeTokens.typography.body.fontWeight.value,
     letterSpacing: typeTokens.typography.body.letterSpacing.value,
     textTransform: typeTokens.typography.body.textCase.value,
@@ -67,7 +67,7 @@ const styles = {
   },
   bodyAlt: {
     fontSize: typeTokens.typography['body alt'].fontSize.value,
-    lineHeight: typeTokens.typography['body alt'].lineHeight.value,
+    lineHeight: `${typeTokens.typography['body alt'].lineHeight.value}px`,
     fontWeight: typeTokens.typography['body alt'].fontWeight.value,
     letterSpacing: typeTokens.typography['body alt'].letterSpacing.value,
     textTransform: typeTokens.typography['body alt'].textCase.value,
@@ -76,7 +76,7 @@ const styles = {
   },
   smallBody: {
     fontSize: typeTokens.typography['small body'].fontSize.value,
-    lineHeight: typeTokens.typography['small body'].lineHeight.value,
+    lineHeight: `${typeTokens.typography['small body'].lineHeight.value}px`,
     fontWeight: typeTokens.typography['small body'].fontWeight.value,
     letterSpacing: typeTokens.typography['small body'].letterSpacing.value,
     textTransform: typeTokens.typography['small body'].textCase.value.value,
@@ -85,7 +85,7 @@ const styles = {
   },
   smallBodyAlt: {
     fontSize: typeTokens.typography['small body alt'].fontSize.value,
-    lineHeight: typeTokens.typography['small body alt'].lineHeight.value,
+    lineHeight: `${typeTokens.typography['small body alt'].lineHeight.value}px`,
     fontWeight: typeTokens.typography['small body alt'].fontWeight.value,
     letterSpacing: typeTokens.typography['small body alt'].letterSpacing.value,
     textTransform: typeTokens.typography['small body alt'].textCase.value,
@@ -94,7 +94,7 @@ const styles = {
   },
   caption: {
     fontSize: typeTokens.typography.caption.fontSize.value,
-    lineHeight: typeTokens.typography.caption.lineHeight.value,
+    lineHeight: `${typeTokens.typography.caption.lineHeight.value}px`,
     fontWeight: typeTokens.typography.caption.fontWeight.value,
     letterSpacing: typeTokens.typography.caption.letterSpacing.value,
     textTransform: typeTokens.typography.caption.textCase.value,
@@ -103,7 +103,7 @@ const styles = {
   },
   tiny: {
     fontSize: typeTokens.typography.tiny.fontSize.value,
-    lineHeight: typeTokens.typography.tiny.lineHeight.value,
+    lineHeight: `${typeTokens.typography.tiny.lineHeight.value}px`,
     fontWeight: typeTokens.typography.tiny.fontWeight.value,
     letterSpacing: typeTokens.typography.tiny.letterSpacing.value,
     textTransform: typeTokens.typography.tiny.textCase.value,

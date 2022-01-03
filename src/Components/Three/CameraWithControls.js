@@ -12,7 +12,7 @@ const CameraWithControls = ({ dragTool, ...props }) => {
   const camRef = useRef();
   const [{ x, y }, api] = useSpring(() => ({ from: { y: 0, x: 0 }, config: { mass: 0.01, tension: 100, friction: 5 } }));
 
-  const dragSpeed = 0.011;
+  const dragSpeed = 0.006;
   const fn = useCallback(
     ({ offset }) => {
       api.start({ x: -offset[0] * dragSpeed, y: offset[1] * dragSpeed });
@@ -32,9 +32,9 @@ const CameraWithControls = ({ dragTool, ...props }) => {
   useGesture({ onWheel: handleScroll, onDrag: fn }, { target: window, drag: dragOptions });
 
   useFrame(() => {
-    camRef.current.position.set(x.get(), y.get(), 20);
+    camRef.current.position.set(x.get(), y.get(), props.position[2]);
   });
-  return <AnimatedCamera ref={camRef} makeDefault {...props} position={[0, 0, 20]} />;
+  return <AnimatedCamera ref={camRef} makeDefault {...props} />;
 };
 
 export default CameraWithControls;

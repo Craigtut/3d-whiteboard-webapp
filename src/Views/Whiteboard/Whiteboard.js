@@ -1,7 +1,10 @@
 import React, { Suspense } from 'react';
+import { useParams } from 'react-router-dom';
+import { Loader } from '@react-three/drei';
 
 import BoardRenderer from './Three/BoardRenderer';
 import CircleLoadingAnimation from '../../Components/CircleLoadingAnimation';
+import { useSubscribeToBoard } from '../../Services/boards';
 
 import Logo from '../../Images/Logo.svg';
 
@@ -9,6 +12,9 @@ import { Colors } from '../../Theme';
 import ToolPanel from './ToolPanel';
 
 const Whiteboard = () => {
+  const params = useParams();
+  const boardData = useSubscribeToBoard(params.boardUID);
+
   return (
     <div style={styles.container}>
       <div style={styles.header}>
@@ -16,10 +22,11 @@ const Whiteboard = () => {
           <img src={Logo} alt="logo" />
         </div>
       </div>
-      <ToolPanel />
+      <ToolPanel boardUID={boardData.uid} />
       <Suspense fallback={<CircleLoadingAnimation />}>
-        <BoardRenderer style={styles.board} g />
+        <BoardRenderer style={styles.board} boardData={boardData} />
       </Suspense>
+      <Loader />
     </div>
   );
 };

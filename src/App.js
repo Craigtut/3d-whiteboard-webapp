@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Navigation from './Navigation';
 
 function App() {
   return (
     <div>
-      <Navigation />
+      <Suspense fallback={null}>
+        <Navigation />
+      </Suspense>
     </div>
   );
 }

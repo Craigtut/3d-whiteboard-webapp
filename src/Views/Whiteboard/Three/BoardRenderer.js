@@ -1,63 +1,40 @@
-import React, { Suspense, useRef, useState } from 'react';
+/* eslint-disable no-undef */
+import React, { Suspense, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useTexture } from '@react-three/drei';
-import { DoubleSide, RepeatWrapping } from 'three';
-import whiteboardTextureTile from '../../../Images/Textures/whiteboardTextureTile.png';
+import { useContextBridge } from '@react-three/drei';
+
 import CameraWithControls from '../../../Components/Three/CameraWithControls';
 import { useToolBarStore } from '../../../Stores';
+import WhiteboardSurface from '../../../Components/Three/WhiteboardSurface';
+import BoardObject from '../../../Components/Three/BoardObject';
 
-const BoardRenderer = (style) => {
+const BoardRenderer = ({ boardData, style }) => {
   const selectedTool = useToolBarStore((state) => state.selectedTool);
+  const ContextBridge = useContextBridge(window.ReactQueryClientContext);
+
+  const boardObjectsArray = useMemo(() => (boardData.boardObjects ? Object.values(boardData.boardObjects) : []), [boardData.boardObjects]);
 
   return (
-    <Canvas style={style}>
-      <CameraWithControls position={[0, 0, 20]} fov={30} dragTool={selectedTool === 1} />
-      <ambientLight />
-      <pointLight position={[10, 10, 10]} />
-      <Box position={[-1.2, 0, 0]} />
-      <Box position={[1.2, 0, 0]} />
-      <WhiteboardBacking size={128} />
+    <Canvas style={{ ...style, ...styles.canvas }}>
+      <ContextBridge>
+        <Suspense fallback={null}>
+          <CameraWithControls position={[0, 0, 10]} fov={30} dragTool={selectedTool === 1} />
+          <ambientLight />
+          <pointLight position={[10, 10, 10]} />
+          {boardObjectsArray.map((boardObject) => {
+            return <BoardObject boardObject={boardObject} boardUID={boardData.uid} draggable={selectedTool === 0} />;
+          })}
+          <WhiteboardSurface size={128} />
+        </Suspense>
+      </ContextBridge>
     </Canvas>
   );
 };
 
-const WhiteboardBacking = ({ size }) => {
-  const texture = useTexture(whiteboardTextureTile);
-
-  texture.wrapS = RepeatWrapping;
-  texture.wrapT = RepeatWrapping;
-  texture.repeat.set(size * 3, size * 3);
-
-  return (
-    <mesh>
-      <planeGeometry args={[size, size]} />
-      <meshStandardMaterial map={texture} side={DoubleSide} />
-    </mesh>
-  );
+const styles = {
+  canvas: {
+    touchAction: 'none',
+  },
 };
-
-function Box(props) {
-  // This reference gives us direct access to the THREE.Mesh object
-  const ref = useRef();
-  // Hold state for hovered and clicked events
-  const [hovered, hover] = useState(false);
-  const [clicked, click] = useState(false);
-  // Subscribe this component to the render-loop, rotate the mesh every frame
-  useFrame((state, delta) => (ref.current.rotation.x += 0.01));
-  // Return the view, these are regular Threejs elements expressed in JSX
-  return (
-    <mesh
-      {...props}
-      ref={ref}
-      scale={clicked ? 1.5 : 1}
-      onClick={(event) => click(!clicked)}
-      onPointerOver={(event) => hover(true)}
-      onPointerOut={(event) => hover(false)}
-    >
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
-    </mesh>
-  );
-}
 
 export default BoardRenderer;
