@@ -2,9 +2,10 @@ import React, { Suspense } from 'react';
 import { useParams } from 'react-router-dom';
 import { Loader } from '@react-three/drei';
 
-import BoardRenderer from './Three/BoardRenderer';
+import BoardRenderer from './BoardRenderer';
 import CircleLoadingAnimation from '../../Components/CircleLoadingAnimation';
 import { useSubscribeToBoard } from '../../Services/boards';
+import ShortcutListeners from './ShortcutListeners';
 
 import Logo from '../../Images/Logo.svg';
 
@@ -26,6 +27,7 @@ const Whiteboard = () => {
       <Suspense fallback={<CircleLoadingAnimation />}>
         <BoardRenderer style={styles.board} boardData={boardData} />
       </Suspense>
+      <ShortcutListeners />
       <Loader />
     </div>
   );

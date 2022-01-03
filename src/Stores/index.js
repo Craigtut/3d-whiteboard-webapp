@@ -7,5 +7,7 @@ export const useToolBarStore = create((set) => ({
 
 export const useWhiteboardStore = create((set) => ({
   selectedObject: undefined,
+  newBoardObject: undefined,
   selectObject: (objectUID) => set({ selectedObject: objectUID }),
+  setNewBoardObject: (boardObject) => set({ newBoardObject: boardObject }),
 }));

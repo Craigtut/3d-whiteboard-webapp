@@ -1,4 +1,4 @@
-import { useDatabaseSetMutation, useDatabaseValue } from '@react-query-firebase/database';
+import { useDatabaseSetMutation, useDatabaseRemoveMutation } from '@react-query-firebase/database';
 import { ref } from 'firebase/database';
 import { ref as storRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 
@@ -41,5 +41,14 @@ export const useUpdateBoardObject = (boardUID, objectUID) => {
 
   return (boardObject) => {
     mutation.mutate(boardObject);
+  };
+};
+
+export const useDeleteBoardObject = (boardUID, objectUID) => {
+  const dbRef = ref(database, `boards/${boardUID}/boardObjects/${objectUID}`);
+  const mutation = useDatabaseRemoveMutation(dbRef);
+
+  return () => {
+    mutation.mutate();
   };
 };

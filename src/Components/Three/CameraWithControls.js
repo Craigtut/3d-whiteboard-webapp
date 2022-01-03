@@ -15,7 +15,7 @@ const CameraWithControls = ({ dragTool, ...props }) => {
   const dragSpeed = 0.006;
   const fn = useCallback(
     ({ offset }) => {
-      api.start({ x: -offset[0] * dragSpeed, y: offset[1] * dragSpeed });
+      api.start({ immediate: true, x: -offset[0] * dragSpeed, y: offset[1] * dragSpeed });
     },
     [api]
   );
