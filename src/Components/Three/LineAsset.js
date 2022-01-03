@@ -3,7 +3,7 @@ import { Line } from '@react-three/drei';
 
 const LineAsset = ({ points, color }) => {
   if (points.length < 1) return null;
-  return <Line points={points} color={color} lineWidth={1} />;
+  return <Line points={points} color={color} lineWidth={2} />;
 };
 
 LineAsset.defaultProps = {

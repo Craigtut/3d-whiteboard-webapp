@@ -1,40 +1,41 @@
 /* eslint-disable no-undef */
 
-import React, { useRef, useMemo, useCallback } from 'react';
-import { useFrame } from '@react-three/fiber';
+import React, { useRef } from 'react';
 import { PerspectiveCamera } from '@react-three/drei';
 import { useSpring, animated } from '@react-spring/three';
 import { useGesture } from '@use-gesture/react';
 
-const AnimatedCamera = animated(PerspectiveCamera);
-
-const CameraWithControls = ({ dragTool, ...props }) => {
+const CameraWithControls = ({ dragTool, position, ...props }) => {
   const camRef = useRef();
-  const [{ x, y }, api] = useSpring(() => ({ from: { y: 0, x: 0 }, config: { mass: 0.01, tension: 100, friction: 5 } }));
+  const [animStyles, api] = useSpring(() => ({ position: position, config: { mass: 0.01, tension: 100, friction: 5 } }));
 
-  const dragSpeed = 0.006;
-  const fn = useCallback(
-    ({ offset }) => {
-      api.start({ immediate: true, x: -offset[0] * dragSpeed, y: offset[1] * dragSpeed });
-    },
-    [api]
-  );
+  const handleDrag = ({ delta: [x, y] }) => {
+    const dragSpeed = camRef.current.position.z * 0.0012;
+    api.start({ immediate: true, position: [camRef.current.position.x - x * dragSpeed, camRef.current.position.y + y * dragSpeed, camRef.current.position.z] });
+  };
 
-  const scrollSpeed = 0.02;
-  const handleScroll = useCallback(
-    ({ offset }) => {
-      api.start({ x: offset[0] * scrollSpeed, y: -offset[1] * scrollSpeed });
-    },
-    [api]
-  );
+  const handleScroll = ({ delta: [x, y], altKey }) => {
+    const scrollSpeed = camRef.current.position.z * 0.002;
+    if (altKey) {
+      api.start({ position: [camRef.current.position.x, camRef.current.position.x, camRef.current.position.z - y] });
+    } else {
+      api.start({ position: [camRef.current.position.x + x * scrollSpeed, camRef.current.position.y - y * scrollSpeed, camRef.current.position.z] });
+    }
+  };
+
+  const handlePinch = ({ offset: [d, a] }) => {
+    api.start({ position: [camRef.current.position.x, camRef.current.position.y, d] });
+  };
 
   const dragOptions = { pointer: { buttons: dragTool ? [1, 4] : [4] } };
-  useGesture({ onWheel: handleScroll, onDrag: fn }, { target: window, drag: dragOptions });
+  const pinchOptions = { from: position[2] };
+  useGesture({ onWheel: handleScroll, onDrag: handleDrag, onPinch: handlePinch }, { target: window, drag: dragOptions, pinch: pinchOptions });
 
-  useFrame(() => {
-    camRef.current.position.set(x.get(), y.get(), props.position[2]);
-  });
-  return <AnimatedCamera ref={camRef} makeDefault {...props} />;
+  return (
+    <animated.group ref={camRef} {...animStyles}>
+      <PerspectiveCamera makeDefault {...props} />;
+    </animated.group>
+  );
 };
 
 export default CameraWithControls;

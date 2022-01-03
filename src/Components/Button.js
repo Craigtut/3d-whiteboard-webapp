@@ -4,14 +4,14 @@ import React from 'react';
 
 import { Colors, Typography } from '../Theme';
 
-const Button = ({ text, color, onClick }) => {
+const Button = ({ text, color, onClick, style }) => {
   const [{ opacity }, api] = useSpring(() => ({ opacity: 1 }));
   const bindGestures = useHover(({ active }) => {
     api.update({ opacity: active ? 0.56 : 1 }); // To-Do investigate why anim isn't working
   });
 
   return (
-    <animated.button type="button" style={{ ...styles.button, backgroundColor: color, opacity }} onClick={onClick} {...bindGestures()}>
+    <animated.button type="button" style={{ ...styles.button, ...style, backgroundColor: color, opacity }} onClick={onClick} {...bindGestures()}>
       {text}
     </animated.button>
   );

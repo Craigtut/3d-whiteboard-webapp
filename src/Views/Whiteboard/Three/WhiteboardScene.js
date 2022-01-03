@@ -28,7 +28,8 @@ const WhiteboardScene = ({ boardData }) => {
 
   const onCanvasDrag = ({ xy, active }) => {
     if (selectedTool === 2) {
-      const worldSpaceVec = screenToWorldSpace({ xy, z: 0.001, camera, size });
+      const worldSpaceVec = screenToWorldSpace({ xy, z: 0.1, camera, size });
+      console.log(newBoardObject?.data?.points);
 
       setNewBoardObject({
         type: 'drawing',

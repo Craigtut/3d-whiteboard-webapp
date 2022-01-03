@@ -8,12 +8,12 @@ import { useWhiteboardStore } from '../../Stores';
 const ShortcutListeners = () => {
   const params = useParams();
   const selectedObject = useWhiteboardStore((state) => state.selectedObject);
-  const deleteBoard = useDeleteBoardObject(params.boardUID, selectedObject?.uid);
+  const deleteObject = useDeleteBoardObject(params.boardUID, selectedObject?.uid);
 
   const handleDeleteCurrentlySelected = () => {
     if (selectedObject) {
       console.log('Deleting');
-      deleteBoard();
+      deleteObject();
     }
   };
 

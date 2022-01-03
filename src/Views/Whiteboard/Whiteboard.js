@@ -1,11 +1,12 @@
 import React, { Suspense } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Loader } from '@react-three/drei';
 
 import BoardRenderer from './BoardRenderer';
 import CircleLoadingAnimation from '../../Components/CircleLoadingAnimation';
-import { useSubscribeToBoard } from '../../Services/boards';
+import { useCreateNewBoard, useSubscribeToBoard } from '../../Services/boards';
 import ShortcutListeners from './ShortcutListeners';
+import Button from '../../Components/Button';
 
 import Logo from '../../Images/Logo.svg';
 
@@ -14,13 +15,24 @@ import ToolPanel from './ToolPanel';
 
 const Whiteboard = () => {
   const params = useParams();
+  const navigate = useNavigate();
   const boardData = useSubscribeToBoard(params.boardUID);
+  const createBoard = useCreateNewBoard();
+
+  // create new board on button click and navigate to the new board
+  const handleNewBoardClick = () => {
+    const uid = createBoard();
+    navigate(`/board/${uid}`);
+  };
 
   return (
     <div style={styles.container}>
       <div style={styles.header}>
         <div style={styles.headerContents}>
           <img src={Logo} alt="logo" />
+          <div style={styles.rightHeader}>
+            <Button text="New Board" onClick={handleNewBoardClick} style={styles.button} />
+          </div>
         </div>
       </div>
       <ToolPanel boardUID={boardData.uid} />
@@ -50,6 +62,13 @@ const styles = {
   },
   headerContents: {
     margin: '0 44px',
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  button: {
+    margin: '0 16px',
   },
   board: {
     width: '100%',

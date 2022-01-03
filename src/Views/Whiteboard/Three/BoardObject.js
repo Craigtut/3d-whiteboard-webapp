@@ -19,18 +19,18 @@ const BoardObject = ({ boardObject, boardUID, draggable, selectable }) => {
   const { selectObject, selectedObject } = useWhiteboardStore((state) => ({ selectObject: state.selectObject, selectedObject: state.selectedObject }));
 
   // Object interaction and animtion
-  const [currX, currY, currZ] = boardObject.position;
   const [animStyle, api] = useSpring(() => ({ position: boardObject.position, config: { mass: 3, friction: 40, tension: 800 } }));
   // update position if props change
-  api.start({ immediate: true, position: [currX, currY, currZ] });
+  api.start({ immediate: true, position: boardObject.position });
 
   const bindGestures = useDrag(
     ({ xy: [screenX, screenY], down, active, event }) => {
       event.stopPropagation();
-      const worldSpaceMouseVec = screenToWorldSpace({ xy: [screenX, screenY], z: 1, size, camera });
+      const worldSpaceMouseVec = screenToWorldSpace({ xy: [screenX, screenY], z: boardObject.position[2], size, camera });
+
       api.start({
         immediate: true,
-        position: down ? screenToWorldSpace({ xy: [screenX, screenY], z: 2, size, camera }).toArray() : worldSpaceMouseVec.toArray(),
+        position: down ? screenToWorldSpace({ xy: [screenX, screenY], z: boardObject.position[2] + 1, size, camera }).toArray() : worldSpaceMouseVec.toArray(),
       });
 
       // Once released, update position in db
